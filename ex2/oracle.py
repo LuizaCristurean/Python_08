@@ -57,7 +57,9 @@ def print_report(config: dict[str, str]) -> None:
 
     print("Environment security check:")
     print("[OK] No hardcoded secrets detected")
-    print(f"[{'OK' if not warnings else 'WARN'}] .env file properly configured")
+    print(
+        f"[{'OK' if not warnings else 'WARN'}] .env file properly configured"
+        )
     if is_production:
         print("[INFO] Running in PRODUCTION mode")
     else:
