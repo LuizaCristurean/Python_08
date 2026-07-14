@@ -2,6 +2,9 @@ import os
 from dotenv import load_dotenv
 
 
+VALID_MODES = {"development", "production"}
+
+
 def load_configuration() -> dict[str, str]:
     load_dotenv()  # silently does nothing if no .env file exists
 
@@ -16,6 +19,11 @@ def load_configuration() -> dict[str, str]:
 
 def validate_configuration(config: dict[str, str]) -> list[str]:
     warnings = []
+    if config["MATRIX_MODE"] not in VALID_MODES:
+        warnings.append(
+            f"MATRIX_MODE '{config['MATRIX_MODE']}' is not recognized "
+            "(expected 'development' or 'production')"
+        )
     if not config["DATABASE_URL"]:
         warnings.append("DATABASE_URL not set - no database connection")
     if not config["API_KEY"]:
